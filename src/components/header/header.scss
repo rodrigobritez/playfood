@@ -1,5 +1,10 @@
 @import '../../assets/styles/colors.scss';
 
+header{
+    background-color: $white;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.025);
+}
+
 .header__block{
     height: 20vh;
     display: flex;

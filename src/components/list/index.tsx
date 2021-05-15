@@ -1,4 +1,5 @@
 import React from 'react'; 
+import { Card } from '../card';
 import './list.scss';
 
 interface IList {
@@ -7,8 +8,10 @@ interface IList {
 
 export const List: React.FC<IList> = () => (
     <>
-        <div className="box">
-            a
+        <div className="list">
+            <Card />
+            <Card />
+            <Card />
         </div>
     </>
 )
