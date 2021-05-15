@@ -34,7 +34,8 @@
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "ie 10"
     ],
     "development": [
       "last 1 chrome version",
@@ -43,6 +44,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.7"
+    "@types/react-router-dom": "^5.1.7",
+    "sass": "^1.32.13"
   }
 }

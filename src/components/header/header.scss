@@ -1,0 +1,80 @@
+@import '../../assets/styles/colors.scss';
+
+.header{
+    height: 15vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    .search__content {
+        width: 40%;
+    }
+    .logo{
+        span{
+            font-size: 1.2em;
+            font-weight: 100;
+            user-select: none;
+            cursor: pointer;
+            strong{
+                transition: ease .1s;
+                color: $primary;
+            }
+            &:hover{
+                strong{
+                    color: $secondary;
+                }
+            }
+        }
+    }
+    .badge__content{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: $primary;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .header{
+        .search__content {
+            width: 70%;
+        }
+    }
+  }
+
+@media screen and (max-width: 500px) {
+    .header{
+        background-color: $primary;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 20vh;
+        .search__content {
+            width: 80%;
+        }    
+        .logo{
+            span{
+                font-size: 1.2em;
+                font-weight: 400;
+                user-select: none;
+                cursor: pointer;
+                color: white;
+                strong{
+                    transition: ease .1s;
+                    color: $white;
+                }
+            }
+        }
+    }
+    .container{
+       width: 100%; 
+       padding: 0;
+    }
+   
+    .count__info{
+        display: none;
+    }
+  }

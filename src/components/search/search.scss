@@ -1,0 +1,29 @@
+@import '../../assets/styles/colors.scss';
+
+
+.input__block{
+    position: relative;
+    height: 45px;
+    width: 100%;
+    input{
+        border: none;
+        background-color: $light-gray;
+        height: 100%;
+        padding-left: 50px;
+        box-sizing: border-box;
+        font-size: .8em;
+        width: 100%;
+        font-family: 'Barlow', 'sans-serif';
+        border-radius: 10px;
+        outline: 0;
+        font-weight: bold;
+        &:valid {
+            color: $primary;
+        }
+    }
+    .search-icon{
+        position: absolute;
+        top: 50%; left: 20px;
+        transform: translate(0%,-50%);
+    }
+}

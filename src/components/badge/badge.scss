@@ -1,0 +1,8 @@
+@import '../../assets/styles/colors.scss';
+
+.badge{
+    background-color: $secondary;
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+}

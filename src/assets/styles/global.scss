@@ -1,0 +1,45 @@
+
+
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+    width: 85%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.w-40{
+    width: 40%;
+}
+
+.d-flex{
+    display: flex;
+}
+
+.row{
+    flex-direction: row;
+}
+
+.h-full{
+    height: 100%;
+}
+
+.align-center{
+    align-items: center;
+}
+
+.justify-center{
+    justify-content: center;
+}
+
+.ml-3{
+    margin-left: 30px;
+}
+
+.ml-2{
+    margin-left: 20px;
+}
+
+.ml-1{
+    margin-left: 10px;
+}
