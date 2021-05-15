@@ -1,10 +1,12 @@
 import React from 'react'; 
 import './button.scss';
 
+interface IButton {
+    onClick: Function
+}
 
-
-export const Button: React.FC= ({children}) => (
+export const Button: React.FC<IButton> = ({children, onClick}) => (
     <>
-    <button>{children}</button> 
+    <button onClick={() => onClick()}>{children}</button> 
     </>
 )
