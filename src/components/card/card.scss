@@ -13,6 +13,8 @@
     align-items: center;
     justify-content: space-between;
     padding: 15px;
+    cursor: pointer;
+    transition: ease-out .2s;
     .icon{
         cursor: pointer;
         &:hover{
@@ -38,4 +40,15 @@
     padding: 15px;
     width: 100%;
     border-radius: 0px 0px 10px 10px;
+    user-select: none;
+    font-style: italic;
+}
+
+@media screen and (max-width: 500px) {
+    .card{
+        .total{
+            font-size: .8em;
+            white-space: nowrap;
+        }
+    }  
 }

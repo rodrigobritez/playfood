@@ -6,3 +6,9 @@
     height: 50px;
     border-radius: 15px;
 }
+
+@media screen and (max-width: 500px) {
+    .badge{
+        border-radius: 10px;
+    }    
+}

@@ -4,11 +4,17 @@ import { ReactComponent as CheckIcon } from '../../assets/icons/check.svg';
 import { ReactComponent as AlertIcon } from '../../assets/icons/alert.svg';
 import { ReactComponent as ChevronDown } from '../../assets/icons/chevron-down.svg';
 import { ReactComponent as ChevronUp } from '../../assets/icons/chevron-up.svg';
-interface ICard {
 
+enum EStatus {
+    Finished = 1,
+    Analysis = 2,
 }
 
-export const Card: React.FC<ICard> = () => {
+interface ICard {
+    status?: EStatus
+}
+
+export const Card: React.FC<ICard> = ({status}) => {
     const [showDetails, setShowDetails] = useState(false);
     return (
         <>
@@ -16,7 +22,8 @@ export const Card: React.FC<ICard> = () => {
                 <div className="card">
                     <div className="d-flex align-center">
                         <div className="badge d-flex column  align-center justify-center">
-                            <CheckIcon fill="#503E9D" />
+                            {status === 1 ? <CheckIcon fill="#503E9D" /> : <AlertIcon fill="#503E9D" />}
+                            
                         </div>
                         <div className="d-flex column ml-2">
                             <p className="date">12/04/2021</p>
