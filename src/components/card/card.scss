@@ -42,6 +42,7 @@
     border-radius: 0px 0px 10px 10px;
     user-select: none;
     font-style: italic;
+
 }
 
 @media screen and (max-width: 500px) {
@@ -49,6 +50,12 @@
         .total{
             font-size: .8em;
             white-space: nowrap;
+        }
+        .badge{
+            svg{
+                width: 20px;
+            }
+            background-color: transparent;
         }
     }  
 }
