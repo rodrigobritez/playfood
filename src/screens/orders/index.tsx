@@ -12,7 +12,7 @@ export const Orders: React.FC = () => {
 
     return (
         <>
-            <Header />
+            <Header  showBilling={true}/>
             <section className="container mt-2 ">
                 <div className="d-flex justify-between align-center">
                     <div>
@@ -93,7 +93,7 @@ export const Orders: React.FC = () => {
                     </div>
                 </div>
                 <div className="modal__content__total-label"><span>TOTAL:</span><span>R$ 20,30</span></div>
-                <button className="modal__content__button">Finish  <ArrowRight fill="#FFF" /></button>
+                <button className="modal__content__button pointer">Finish  <ArrowRight fill="#FFF" /></button>
                 </div>
             </Modal>
         </>
