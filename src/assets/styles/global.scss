@@ -85,6 +85,21 @@
     background-color: $primary !important;
 }
 
+.green{
+    background-color: rgb(18, 179, 98) !important;
+}
+
 .pointer{
     cursor: pointer;
+}
+
+.opacity-25{
+    opacity: .25;
+}
+
+.badge{
+    background-color: $secondary;
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
 }

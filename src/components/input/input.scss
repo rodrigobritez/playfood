@@ -1,0 +1,41 @@
+@import "../../assets/styles/colors.scss";
+
+
+.select{
+    width: 100%;
+    border: none;
+    border-bottom: solid 1px $gray;
+    padding: 15px 10px;
+    outline: 0;
+    font-weight: bold;
+    box-sizing: border-box;
+    &:focus{
+        color: $primary;
+        border-bottom: solid 2px $primary;
+    }
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.input{
+    width: 100%;
+    border: none;
+    border-bottom: solid 1px $gray;
+    padding: 15px 10px;
+    outline: 0;
+    font-weight: bold;
+    box-sizing: border-box;
+    &:focus{
+        color: $primary;
+        border-bottom: solid 2px $primary;
+    }
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.label{
+    font-weight: lighter;
+    font-size: .9em;
+}

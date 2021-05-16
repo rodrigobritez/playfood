@@ -7,6 +7,6 @@ interface IButton {
 
 export const Button: React.FC<IButton> = ({children, onClick}) => (
     <>
-    <button onClick={() => onClick()}>{children}</button> 
+    <button className="button" onClick={() => onClick()}>{children}</button> 
     </>
 )

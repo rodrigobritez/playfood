@@ -17,9 +17,58 @@
 }
 
 .modal__content{
+    padding-bottom: 140px;
+    position: relative;
     .title{
         font-size: 1.3em;
         color: $primary;
         font-weight: bold;
     }
+    .modal__content__button{
+        width: 100%;
+        border: none;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 70px;
+        background-color: $primary;
+        font-weight: bold;
+        font-size: 1.2em;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0px 50px;
+    }
+    .modal__content__total-label{
+        position: absolute;
+        left: 0;
+        bottom: 70px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0px 20px;
+        box-sizing: border-box;
+        width: 100%;
+        color: $primary;
+        font-weight: bold;
+        background-color: $secondary;
+    }
+    .product-card{
+        .product-card__price{
+            font-weight: bold;
+            color: $primary
+        }
+        .counter{
+            font-weight: bold;
+            padding: 0px 10px;
+            span{
+                font-size: 1.2em;
+                padding: 0px 10px;
+                cursor: pointer;
+            }
+        }
+    }
+    
 }
