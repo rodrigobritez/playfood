@@ -14,7 +14,7 @@ export const Billing: React.FC = () => {
                 <span className="subtitle">Pull down to see all billing.</span>
             </div>
             <div className="d-flex row justify-between align-center mt-1 lists">
-                <div className="mr-1 w-full mt-1">
+                <div className="w-full mt-1">
                     <h4 className="title d-flex justify-between">Food list <span><strong>TOTAL:</strong> R$ 20,30 </span></h4>
                     <div className="box mt-2">
                         <List />
