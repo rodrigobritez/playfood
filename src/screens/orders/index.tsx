@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./orders.scss"
 import { Button } from '../../components/button';
 import { Header } from '../../components/header'
@@ -6,6 +6,7 @@ import { List } from '../../components/list'
 import { Modal } from '../../components/modal';
 import { Input } from '../../components/input';
 import { ReactComponent as ArrowRight } from '../../assets/icons/arrow-right.svg';
+import { api } from '../../services/api';
 
 interface IOrder {
     id: string | number,
@@ -28,7 +29,9 @@ interface IProduct {
 }
 
 export const Orders: React.FC = () => {
-    const [openModal, setOpenModal] = useState<Boolean>(true);
+    const [openModal, setOpenModal] = useState<Boolean>(false);
+    const [food, setFood] = useState([]);
+    const [drink, setDrink] = useState([]);
     const [order, setOrder] = useState<IOrder>({
         id: 0,
         datetime: "",
@@ -39,13 +42,20 @@ export const Orders: React.FC = () => {
         expiration_date: "",
         food: [],
         drink: []
-    })
+    });
 
+
+ 
+    useEffect(() => {
+        api.get('products').then(res => res.data).then(products => {
+            setDrink(products.filter((item: IProduct) => item.category === 'drink'));
+            setFood(products.filter((item: IProduct) => item.category === 'food'))
+        })
+    }, [])
 
     const changeValuesInOrder = (value: unknown, key: string) => {
         setOrder({ ...order, [key]: value })
     }
-
 
     return (
         <>
@@ -79,7 +89,7 @@ export const Orders: React.FC = () => {
                         <div className="mt-2">
                             <Input type="text" value={order.name} placeholder="Ex: Noah" objectKey="name" setValue={changeValuesInOrder} label="Name" />
                             <div className="mt-2">
-                                <Input type="select" label="Select your food" />
+                                <Input type="select" data={food} label="Select your food" />
                                 {order.food.length > 0 && (
                                     <div className="box">
                                         {
@@ -105,7 +115,7 @@ export const Orders: React.FC = () => {
                                 )}
                             </div>
                             <div className="mt-2">
-                                <Input type="select" label="Select your drink" />
+                                <Input type="select" data={drink}  label="Select your drink" />
                                 {order.drink.length > 0 && (
                                     <div className="box">
                                         {

@@ -9,10 +9,19 @@ interface IInput {
     value?: string,
     objectKey?: string,
     setValue?: Function | any,
-    mask?: string
+    mask?: string,
+    data?: Array<IProduct>
 }
 
-export const Input: React.FC<IInput> = ({label, type, placeholder, value, setValue, objectKey, mask}) => {
+interface IProduct {
+    id: string | number,
+    category: string,
+    name: string,
+    price: number,
+    amount: number,
+}
+
+export const Input: React.FC<IInput> = ({label, type, placeholder, value, setValue, objectKey, mask, data}) => {
     return(
         <>
         {type === 'text' &&
@@ -26,6 +35,11 @@ export const Input: React.FC<IInput> = ({label, type, placeholder, value, setVal
                 <label className="label">{label}</label>
                 <select className="select">
                     <option defaultValue={1}>Select your option</option>
+                    {
+                        data && data.map(product => (
+                            <option key={product.id} value={product.id}>{product.name}</option>
+                        ))
+                    }
                 </select>
             </div>
         }
