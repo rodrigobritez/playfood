@@ -10,9 +10,6 @@ export const List: React.FC<IList> = () => (
     <>
         <div className="list">
             <Card />
-            <Card />
-            <Card />
-            <Card />
         </div>
     </>
 )
