@@ -236,7 +236,7 @@ export const Orders: React.FC = () => {
 
                         </div>
                     </div>
-                    <div className="modal__content__total-label"><span>TOTAL:</span><span>R$ 20,30</span></div>
+                    <div className="modal__content__total-label"><span>TOTAL:</span><span>{ formatMoney(order.drink.reduce((a, c) => a += c.price * c.amount, 0) + (order.food.reduce((a, c) => a += c.price * c.amount, 0)))}</span></div>
                     <button onClick={() => generateOrder()} className="modal__content__button pointer">Finish  <ArrowRight fill="#FFF" /></button>
                 </div>
             </Modal>
