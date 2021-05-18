@@ -11,7 +11,7 @@ import { useMoney } from '../../services/customHooks';
 import { IProduct, IOrder } from '../../utils/interfaces'
 import { useOrdersStore } from '../../contexts/ordersContext';
 import { useObserver } from 'mobx-react-lite';
-
+import { ccValidator } from '../../utils/validators'
 
 export const Orders: React.FC = () => {
     const [openModal, setOpenModal] = useState<Boolean>(false);
@@ -21,12 +21,12 @@ export const Orders: React.FC = () => {
     const [order, setOrder] = useState<IOrder>({
         id: "",
         datetime: "",
-        name: "Miguel",
-        holder_name: "Miguel",
-        card_number: "123",
-        cvv: 123,
+        name: "",
+        holder_name: "",
+        card_number: "",
+        cvv: "",
         total: 0,
-        expiration_date: "12/34",
+        expiration_date: "",
         food: [],
         drink: [],
         status: 0,
@@ -125,6 +125,22 @@ export const Orders: React.FC = () => {
 
 
     const generateOrder = () => {
+        if(!order.name){
+            alert('Insira um nome válido!');
+            return false
+        }
+        if(!order.holder_name || !order.card_number || !order.cvv || !order.expiration_date){
+            alert('Verifique se os dados do cartão foram preenchidos corretamente!');
+            return false
+        }
+        if(order.food.length === 0 && order.drink.length === 0){
+            alert('Selecione um item para realizar o pedido!');
+            return false
+        }
+        if(ccValidator(order.card_number.replace(/\s/g, ''))){
+            alert('Insira um cartão de crédito válido!');
+            return false
+        }
         ordersStore?.createOrder({...order, total: totalOrder(), status: Math.floor(Math.random() * 2) + 1});
         setOpenModal(false)
     }
@@ -139,11 +155,15 @@ export const Orders: React.FC = () => {
                         <span className="subtitle">Pull down to see all your orders.</span>
                     </div>
                 </div>
+                {ordersStore?.orders && ordersStore?.orders.length > 0 ? 
                 <div className="mt-1 box list ">
-                    {ordersStore?.orders.map((orderItem: IOrder) => (
-                        <Card key={orderItem.id} title={orderItem.datetime} subtitle={orderItem.id} value={orderItem.total} showDescription={true} descriptionData={orderItem.food.concat(order.drink)} status={orderItem.status} />
-                    ))}
-                </div>
+                {ordersStore?.orders.map((orderItem: IOrder) => (
+                    <Card key={orderItem.id} title={orderItem.datetime} subtitle={orderItem.id} value={orderItem.total} showDescription={true} descriptionData={orderItem.food.concat(order.drink)} status={orderItem.status} />
+                ))}
+                </div>:<div className="mt-1 box list not-found-box">
+                    <p>No orders were found, make a new one using the button below. </p>
+                </div>}
+                
                 <div className="mt-2 d-flex justify-end">
                     <Button onClick={() => setOpenModal(true)}>
                         New order
@@ -217,14 +237,14 @@ export const Orders: React.FC = () => {
                                 <Input type="text" value={order.holder_name} label="Credit Card Holder Name" objectKey="holder_name" setValue={changeValuesInOrder} placeholder="Ex: Noah Junior" />
                             </div>
                             <div className="mt-2">
-                                <Input type="text" label="Credit Card Number" value={order.card_number} objectKey="card_number" setValue={changeValuesInOrder} placeholder="XXXX XXXX XXXX XXXX" />
+                                <Input type="text" mask="9999 9999 9999 9999" label="Credit Card Number" value={order.card_number} objectKey="card_number" setValue={changeValuesInOrder} placeholder="XXXX XXXX XXXX XXXX" />
                             </div>
                             <div className="d-flex mt-2 mb-10">
                                 <div className="mr-1">
-                                    <Input type="text" label="CVV" objectKey="cvv" value={String(order.cvv)} setValue={changeValuesInOrder} placeholder="XXX" />
+                                    <Input type="text" label="CVV" mask="999" objectKey="cvv" value={String(order.cvv)} setValue={changeValuesInOrder} placeholder="XXX" />
                                 </div>
                                 <div className="ml-1">
-                                    <Input type="text" label="Expiration Date" value={String(order.expiration_date)}  objectKey="expiration_date" setValue={changeValuesInOrder} placeholder="XX/XX" />
+                                    <Input type="text" mask="99/99" label="Expiration Date" value={String(order.expiration_date)}  objectKey="expiration_date" setValue={changeValuesInOrder} placeholder="XX/XX" />
                                 </div>
                             </div>
 

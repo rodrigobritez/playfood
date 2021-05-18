@@ -1,6 +1,6 @@
 import React from 'react'; 
 import './input.scss';
-import "./mask"
+import InputMask from 'react-input-mask';
 
 interface IInput {
     type: string,
@@ -9,8 +9,8 @@ interface IInput {
     value?: string,
     objectKey?: string,
     setValue?: Function | any,
+    data?: Array<IProduct>,
     mask?: string,
-    data?: Array<IProduct>
     selectProduct?: Function | any,
 }
 
@@ -22,13 +22,14 @@ interface IProduct {
     amount: number,
 }
 
-export const Input: React.FC<IInput> = ({label, type, placeholder, value, setValue, objectKey, mask, data, selectProduct}) => {
+export const Input: React.FC<IInput> = ({label, type, placeholder, value, setValue, objectKey, data, selectProduct, mask}) => {
     return(
         <>
         {type === 'text' &&
             <div>
                 <label className="label">{label}</label>
-                <input placeholder={  mask ? mask : placeholder } data-slots={mask ? "X" : null} value={value} onChange={(e) =>  setValue(e.target.value, objectKey)} className="input" />
+                {mask ? <InputMask mask={mask} placeholder={placeholder}  value={value} onChange={(e) =>  setValue(e.target.value, objectKey)} className="input" />:
+                <input placeholder={placeholder}  value={value} onChange={(e) =>  setValue(e.target.value, objectKey)} className="input" />}
             </div>
         }
         {type === 'select' &&

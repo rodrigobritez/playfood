@@ -4,7 +4,7 @@ export interface IOrder {
     name: string,
     holder_name: string,
     card_number: string,
-    cvv: number,
+    cvv: number | string,
     total: number | string,
     expiration_date: string,
     food: Array<IProduct >
