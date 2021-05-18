@@ -4,6 +4,8 @@ import { ReactComponent as CheckIcon } from '../../assets/icons/check.svg';
 import { ReactComponent as AlertIcon } from '../../assets/icons/alert.svg';
 import { ReactComponent as ChevronDown } from '../../assets/icons/chevron-down.svg';
 import { ReactComponent as ChevronUp } from '../../assets/icons/chevron-up.svg';
+import { IProduct } from '../../utils/interfaces';
+import { useMoney } from '../../services/customHooks';
 
 enum EStatus {
     Finished = 1,
@@ -11,11 +13,18 @@ enum EStatus {
 }
 
 interface ICard {
-    status?: EStatus
+    status?: EStatus,
+    title: string,
+    subtitle: string,
+    value: string | number,
+    showDescription: boolean,
+    descriptionData: Array<IProduct|unknown>
 }
 
-export const Card: React.FC<ICard> = ({status}) => {
+
+export const Card: React.FC<ICard> = ({status, title, subtitle, value, showDescription, descriptionData}) => {
     const [showDetails, setShowDetails] = useState(false);
+    const formatMoney = useMoney()
     return (
         <>
             <div>
@@ -26,23 +35,25 @@ export const Card: React.FC<ICard> = ({status}) => {
                             
                         </div>
                         <div className="d-flex column ml-2">
-                            <p className="date">12/04/2021</p>
-                            <p className="code">2cd1e459-eba1-40ce-bdf7-84bf83550153</p>
+                            <p className="date">{title}</p>
+                            <p className="code">{subtitle}</p>
                         </div>
                     </div>
                     <div className="d-flex row align-center">
-                        <p className="total">R$ 40,30</p>
-                        {showDetails ? 
-                        <ChevronUp onClick={() => setShowDetails(false)} className="ml-3 mr-2 icon" fill="#503E9D" /> : 
-                        <ChevronDown onClick={() => setShowDetails(true)} className="ml-3 mr-2 icon" fill="#503E9D" />}
+                        <p className="total">{formatMoney(value)}</p>
+                        {!showDetails ? 
+                        <ChevronUp onClick={() => setShowDetails(true)} className="ml-3 mr-2 icon" fill="#503E9D" /> : 
+                        <ChevronDown onClick={() => setShowDetails(false)} className="ml-3 mr-2 icon" fill="#503E9D" />}
                     </div>
                 </div>
-                {showDetails &&
+                {(showDetails) &&
                     <div className="info">
-                        <div className="d-flex row justify-between">
-                            <span>2x Orange Juice</span>
-                            <span>R$ 40,30</span>
+                        {descriptionData.map((product: any) => (
+                        <div key={product.id} className="d-flex row justify-between">
+                            <span>{product.amount}x {product.name}</span>
+                            <span>{formatMoney(product.price * product.amount)}</span>
                         </div>
+                        ))}
                     </div>}
 
             </div>

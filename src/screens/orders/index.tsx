@@ -3,6 +3,7 @@ import "./orders.scss"
 import { Button } from '../../components/button';
 import { Header } from '../../components/header'
 import { Modal } from '../../components/modal';
+import { Card } from '../../components/card'
 import { Input } from '../../components/input';
 import { ReactComponent as ArrowRight } from '../../assets/icons/arrow-right.svg';
 import { api } from '../../services/api';
@@ -17,18 +18,18 @@ export const Orders: React.FC = () => {
     const [food, setFood] = useState([]);
     const [drink, setDrink] = useState([]);
     const [products, setProdcts] = useState([]);
-    const [orders, setOrders] = useState<Array<IOrder>>([])
     const [order, setOrder] = useState<IOrder>({
         id: "",
         datetime: "",
-        name: "",
-        holder_name: "",
-        card_number: "",
-        cvv: 0,
+        name: "Miguel",
+        holder_name: "Miguel",
+        card_number: "123",
+        cvv: 123,
         total: 0,
-        expiration_date: "",
+        expiration_date: "12/34",
         food: [],
-        drink: []
+        drink: [],
+        status: 0,
     });
     const formatMoney = useMoney();
     const ordersStore = useOrdersStore()
@@ -41,13 +42,6 @@ export const Orders: React.FC = () => {
             setProdcts(products);
         })
     }, [])
-
-    const maching = {
-        title: "datetime",
-        subtitle: "id"
-    }
-
-
  
     const changeValuesInOrder = (value: unknown, key: string) => {
         setOrder({ ...order, [key]: value })
@@ -131,9 +125,8 @@ export const Orders: React.FC = () => {
 
 
     const generateOrder = () => {
-        changeValuesInOrder(totalOrder(), "total");
-        ordersStore?.createOrder(order);
-        setOrders(ordersStore?.orders || []);
+        ordersStore?.createOrder({...order, total: totalOrder(), status: Math.floor(Math.random() * 2) + 1});
+        setOpenModal(false)
     }
 
     return useObserver(() =>  (
@@ -146,7 +139,10 @@ export const Orders: React.FC = () => {
                         <span className="subtitle">Pull down to see all your orders.</span>
                     </div>
                 </div>
-                <div className="mt-1 box">
+                <div className="mt-1 box list ">
+                    {ordersStore?.orders.map((orderItem: IOrder) => (
+                        <Card key={orderItem.id} title={orderItem.datetime} subtitle={orderItem.id} value={orderItem.total} showDescription={true} descriptionData={orderItem.food.concat(order.drink)} status={orderItem.status} />
+                    ))}
                 </div>
                 <div className="mt-2 d-flex justify-end">
                     <Button onClick={() => setOpenModal(true)}>
@@ -169,7 +165,7 @@ export const Orders: React.FC = () => {
                             <div className="mt-2">
                                 <Input type="select" data={food} selectProduct={selectProduct} label="Select your food" />
                                 {order.food.length > 0 && (
-                                    <div className="box">
+                                    <div className="box box-store">
                                         {
                                             order.food.map(food => (
 
@@ -194,7 +190,7 @@ export const Orders: React.FC = () => {
                             <div className="mt-2">
                                 <Input type="select" data={drink} selectProduct={selectProduct} label="Select your drink" />
                                 {order.drink.length > 0 && (
-                                    <div className="box">
+                                    <div className="box box-store">
                                         {
                                             order.drink.map(drink => (
 
@@ -218,17 +214,17 @@ export const Orders: React.FC = () => {
 
                             </div>
                             <div className="mt-2">
-                                <Input type="text" label="Credit Card Holder Name" objectKey="holder_name" setValue={changeValuesInOrder} placeholder="Ex: Noah Junior" />
+                                <Input type="text" value={order.holder_name} label="Credit Card Holder Name" objectKey="holder_name" setValue={changeValuesInOrder} placeholder="Ex: Noah Junior" />
                             </div>
                             <div className="mt-2">
-                                <Input type="text" label="Credit Card Number" objectKey="card_number" setValue={changeValuesInOrder} placeholder="XXXX XXXX XXXX XXXX" />
+                                <Input type="text" label="Credit Card Number" value={order.card_number} objectKey="card_number" setValue={changeValuesInOrder} placeholder="XXXX XXXX XXXX XXXX" />
                             </div>
-                            <div className="d-flex mt-2">
+                            <div className="d-flex mt-2 mb-10">
                                 <div className="mr-1">
-                                    <Input type="text" label="CVV" objectKey="cvv" setValue={changeValuesInOrder} placeholder="XXX" />
+                                    <Input type="text" label="CVV" objectKey="cvv" value={String(order.cvv)} setValue={changeValuesInOrder} placeholder="XXX" />
                                 </div>
                                 <div className="ml-1">
-                                    <Input type="text" label="Expiration Date" objectKey="expiration_date" setValue={changeValuesInOrder} placeholder="XX/XX" />
+                                    <Input type="text" label="Expiration Date" value={String(order.expiration_date)}  objectKey="expiration_date" setValue={changeValuesInOrder} placeholder="XX/XX" />
                                 </div>
                             </div>
 

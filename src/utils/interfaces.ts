@@ -8,7 +8,8 @@ export interface IOrder {
     total: number | string,
     expiration_date: string,
     food: Array<IProduct >
-    drink: Array<IProduct >
+    drink: Array<IProduct >,
+    status: number,
 }
 
 export interface IProduct {

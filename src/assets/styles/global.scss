@@ -85,6 +85,10 @@
     margin-top: 10px;
 }
 
+.pr-4{
+    padding-right: 40px;
+}
+
 .primary{
     background-color: $primary !important;
 }
@@ -120,9 +124,10 @@
     height: 50vh;
     overflow-y: scroll;
     overflow-x: hidden;
-    padding-right: 35px;
 }
+
 
 .list::-webkit-scrollbar {
     display: none;
   }
+  
