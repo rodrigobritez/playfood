@@ -11,6 +11,7 @@ interface IInput {
     setValue?: Function | any,
     mask?: string,
     data?: Array<IProduct>
+    selectProduct?: Function | any,
 }
 
 interface IProduct {
@@ -21,7 +22,7 @@ interface IProduct {
     amount: number,
 }
 
-export const Input: React.FC<IInput> = ({label, type, placeholder, value, setValue, objectKey, mask, data}) => {
+export const Input: React.FC<IInput> = ({label, type, placeholder, value, setValue, objectKey, mask, data, selectProduct}) => {
     return(
         <>
         {type === 'text' &&
@@ -33,8 +34,8 @@ export const Input: React.FC<IInput> = ({label, type, placeholder, value, setVal
         {type === 'select' &&
             <div>
                 <label className="label">{label}</label>
-                <select className="select">
-                    <option defaultValue={1}>Select your option</option>
+                <select onChange={(e) => { selectProduct(e.target.value); e.target.value = "999" } } className="select">
+                    <option defaultValue={999} value={999}>Select your option</option>
                     {
                         data && data.map(product => (
                             <option key={product.id} value={product.id}>{product.name}</option>
