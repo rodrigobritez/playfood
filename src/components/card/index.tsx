@@ -18,7 +18,7 @@ interface ICard {
     subtitle: string,
     value: string | number,
     showDescription: boolean,
-    descriptionData: Array<IProduct|unknown>
+    descriptionData?: Array<IProduct|unknown>
 }
 
 
@@ -41,14 +41,15 @@ export const Card: React.FC<ICard> = ({status, title, subtitle, value, showDescr
                     </div>
                     <div className="d-flex row align-center">
                         <p className="total">{formatMoney(value)}</p>
-                        {!showDetails ? 
+                        
+                        {showDescription ? !showDetails ? 
                         <ChevronUp onClick={() => setShowDetails(true)} className="ml-3 mr-2 icon" fill="#503E9D" /> : 
-                        <ChevronDown onClick={() => setShowDetails(false)} className="ml-3 mr-2 icon" fill="#503E9D" />}
+                        <ChevronDown onClick={() => setShowDetails(false)} className="ml-3 mr-2 icon" fill="#503E9D" /> :  null}
                     </div>
                 </div>
                 {(showDetails) &&
                     <div className="info">
-                        {descriptionData.map((product: any) => (
+                        {descriptionData && descriptionData.map((product: any) => (
                         <div key={product.id} className="d-flex row justify-between">
                             <span>{product.amount}x {product.name}</span>
                             <span>{formatMoney(product.price * product.amount)}</span>

@@ -51,8 +51,10 @@ export const Orders = () => {
 
 
     useEffect(() =>{
-        ordersStore?.loadOrders(JSON.parse(localStorage.getItem("@orders")||""))
-        setOrders(ordersStore?.orders||[])
+        if(localStorage.getItem("@orders")){
+            ordersStore?.loadOrders(JSON.parse(localStorage.getItem("@orders")||""))
+            setOrders(ordersStore?.orders||[])
+        }
     }, [ordersStore])
 
  
@@ -199,7 +201,7 @@ export const Orders = () => {
                 {orders && orders.length > 0 ? 
                 <div className="mt-1 box list ">
                 {orders && orders.map((orderItem: IOrder) => (
-                    <Card key={orderItem.id} title={orderItem.datetime} subtitle={orderItem.id} value={orderItem.total} showDescription={true} descriptionData={orderItem.food.concat(order.drink)} status={orderItem.status} />
+                    <Card key={orderItem.id} title={orderItem.datetime} subtitle={orderItem.id} value={orderItem.total} showDescription={true} descriptionData={orderItem.food.concat(orderItem.drink)} status={orderItem.status} />
                 ))}
                 </div>:<div className="mt-1 box list not-found-box">
                     <p>No orders were found, make a new one using the button below. </p>
