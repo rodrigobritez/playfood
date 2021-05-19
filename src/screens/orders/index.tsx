@@ -13,10 +13,13 @@ import { useOrdersStore } from '../../contexts/ordersContext';
 import { useObserver } from 'mobx-react-lite';
 import { ccValidator } from '../../utils/validators'
 
-export const Orders: React.FC = () => {
+
+
+export const Orders = () => {
     const [openModal, setOpenModal] = useState<Boolean>(false);
     const [food, setFood] = useState([]);
     const [drink, setDrink] = useState([]);
+    const [orders, setOrders] = useState<Array<IOrder>>([])
     const [products, setProdcts] = useState([]);
     const [order, setOrder] = useState<IOrder>({
         id: "",
@@ -40,8 +43,18 @@ export const Orders: React.FC = () => {
             setDrink(products.filter((item: IProduct) => item.category === 'drink'));
             setFood(products.filter((item: IProduct) => item.category === 'food'));
             setProdcts(products);
+            
+        }).catch(err => {
+            alert(err)
         })
     }, [])
+
+
+    useEffect(() =>{
+        ordersStore?.loadOrders(JSON.parse(localStorage.getItem("@orders")||""))
+        setOrders(ordersStore?.orders||[])
+    }, [ordersStore])
+
  
     const changeValuesInOrder = (value: unknown, key: string) => {
         setOrder({ ...order, [key]: value })
@@ -84,7 +97,6 @@ export const Orders: React.FC = () => {
     }
 
     const totalOrder = () => formatMoney(order.drink.reduce((a, c) => a += c.price * c.amount, 0) + (order.food.reduce((a, c) => a += c.price * c.amount, 0)))
-    
 
     const selectProduct = (id: string | number) => {
         const product: IProduct | any = products.find((item: IProduct) => item.id === Number(id));
@@ -122,8 +134,6 @@ export const Orders: React.FC = () => {
 
     }
 
-
-
     const generateOrder = () => {
         if(!order.name){
             alert('Insira um nome válido!');
@@ -137,17 +147,48 @@ export const Orders: React.FC = () => {
             alert('Selecione um item para realizar o pedido!');
             return false
         }
-        if(ccValidator(order.card_number.replace(/\s/g, ''))){
+        if(!ccValidator(order.card_number.replace(/\s/g, ''))){
             alert('Insira um cartão de crédito válido!');
             return false
         }
-        ordersStore?.createOrder({...order, total: totalOrder(), status: Math.floor(Math.random() * 2) + 1});
-        setOpenModal(false)
+
+        try{
+            const new_order = {...order, total: totalOrder(), status: Math.floor(Math.random() * 2) + 1}
+            ordersStore?.createOrder(new_order);
+            localStorage.setItem("@orders", JSON.stringify(ordersStore?.orders));
+            setOrders(ordersStore?.orders||[])
+            setOrder({
+                id: "",
+                datetime: "",
+                name: "",
+                holder_name: "",
+                card_number: "",
+                cvv: "",
+                total: 0,
+                expiration_date: "",
+                food: [],
+                drink: [],
+                status: 0,
+            })
+            setOpenModal(false);
+        }catch(e: unknown){
+            alert('Erro ao adicionar pedido.');
+        }
     }
 
+    const searchCallback = (query: string) => {
+        const origin_orders = ordersStore?.orders
+        const result = orders.filter((item: IOrder) => item.id.split('-')[0].slice(0,4) === query)
+        if(result && result?.length > 0){
+           setOrders(result);
+        }else{
+           setOrders(origin_orders||[]);
+        }
+    }
+   
     return useObserver(() =>  (
         <>
-            <Header showBilling={true} />
+            <Header showBilling={true} searchCallback={searchCallback} />
             <section className="container mt-2 ">
                 <div className="d-flex justify-between align-center">
                     <div>
@@ -155,9 +196,9 @@ export const Orders: React.FC = () => {
                         <span className="subtitle">Pull down to see all your orders.</span>
                     </div>
                 </div>
-                {ordersStore?.orders && ordersStore?.orders.length > 0 ? 
+                {orders && orders.length > 0 ? 
                 <div className="mt-1 box list ">
-                {ordersStore?.orders.map((orderItem: IOrder) => (
+                {orders && orders.map((orderItem: IOrder) => (
                     <Card key={orderItem.id} title={orderItem.datetime} subtitle={orderItem.id} value={orderItem.total} showDescription={true} descriptionData={orderItem.food.concat(order.drink)} status={orderItem.status} />
                 ))}
                 </div>:<div className="mt-1 box list not-found-box">

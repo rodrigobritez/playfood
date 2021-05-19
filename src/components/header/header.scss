@@ -37,23 +37,23 @@ header{
         align-items: center;
         justify-content: center;
         font-weight: bold;
-        color: $white;
+        color: $primary
     }
     .icon-billing {
         display: flex;
         align-items: center;
-        background-color: $primary;
         padding: 0px 20px;
         cursor: pointer;
         border-radius: 5px;
         span{
             font-weight: bold;
-            color: $white;
+            color: $primary;
             padding-right: 10px;
         }
         svg{
             width: 15px;
             height: 15px;
+            color: $primary;
         }
     }
 }
@@ -75,6 +75,14 @@ header{
         flex-direction: column;
         justify-content: space-around;
         height: 20vh;
+        .icon-billing {
+            span{
+                color: $white;
+            }
+            svg{
+                fill: $white;
+            }
+        }
         .search__content {
             width: 80%;
         }    

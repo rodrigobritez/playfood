@@ -12,6 +12,9 @@ export function createOrderStore(){
         },
         removeOrder(id: string | number ){
             this.orders = this.orders.filter((item: IProduct) => item.id !== Number(id));
+        },
+        loadOrders(orders: Array<IOrder>){
+            this.orders = orders;
         }
     }
 }

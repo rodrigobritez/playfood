@@ -6,6 +6,6 @@ export const Routes = () => (
     <>
     <Route path="/" exact={true} component={Orders} />
     <Route path="/orders" exact={true} component={Orders} />
-    <Route path="/billing" exact={true} component={Billing} />
+    <Route path="/billing" component={Billing} />
     </>
 )

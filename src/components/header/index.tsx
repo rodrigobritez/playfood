@@ -2,12 +2,16 @@ import React from 'react';
 import { Search } from '../search';
 import './header.scss';
 import { ReactComponent as GraphIcon } from '../../assets/icons/graph.svg';
+import { useHistory } from 'react-router';
 
 interface IHeader {
-    showBilling?: Boolean
+    showBilling?: Boolean,
+    searchCallback?: Function,
 }
 
-export const Header: React.FC<IHeader> = ({ showBilling }) => {
+export const Header: React.FC<IHeader> = ({ showBilling, searchCallback }) => {
+    const history = useHistory();
+
     return (
         <header className="header">
             <div className="header__block container">
@@ -15,11 +19,11 @@ export const Header: React.FC<IHeader> = ({ showBilling }) => {
                     <span>play<strong>food</strong></span>
                 </div>
                 <div className="search__content d-flex row">
-                    <Search placeholder="Search" />
-                    {showBilling && <div className="icon-billing ml-2 count__info">
+                {showBilling && <><Search placeholder="Search by id" searchCallback={searchCallback ? searchCallback : () => null}/>
+                    <div onClick={() => history.push("/billing")} className="icon-billing ml-2 count__info">
                         <span>Billing</span>
-                        <GraphIcon fill="#FFF" />
-                    </div>}
+                        <GraphIcon fill="#503E9D" />
+                    </div></>}
                 </div>
             </div>
         </header>

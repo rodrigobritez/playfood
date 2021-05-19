@@ -24,5 +24,6 @@ export interface IProduct {
 export interface IOrderStore{
     orders: Array<IOrder>,
     createOrder: Function,
-    removeOrder: Function
+    removeOrder: Function,
+    loadOrders: Function
 }
