@@ -28,3 +28,8 @@ export interface IOrderStore{
     removeOrder: Function,
     loadOrders: Function
 }
+
+export interface IAlert{
+    show: boolean,
+    message: string
+}

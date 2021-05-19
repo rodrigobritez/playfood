@@ -12,6 +12,7 @@ import { IProduct, IOrder } from '../../utils/interfaces'
 import { useOrdersStore } from '../../contexts/ordersContext';
 import { useObserver } from 'mobx-react-lite';
 import { ccValidator } from '../../utils/validators'
+import { Alert } from '../../components/alert';
 
 
 
@@ -21,6 +22,10 @@ export const Orders = () => {
     const [drink, setDrink] = useState([]);
     const [orders, setOrders] = useState<Array<IOrder>>([])
     const [products, setProdcts] = useState([]);
+    const [alertProps, setAlertProps] = useState({
+        show: false,
+        message: ""
+    })
     const [order, setOrder] = useState<IOrder>({
         id: "",
         datetime: "",
@@ -45,7 +50,10 @@ export const Orders = () => {
             setProdcts(products);
             
         }).catch(err => {
-            alert(err)
+            setAlertProps({
+                show: true,
+                message: "[Server Error] Try again."
+            })
         })
     }, [])
 
@@ -138,19 +146,31 @@ export const Orders = () => {
 
     const generateOrder = () => {
         if(!order.name){
-            alert('Insira um nome válido!');
+            setAlertProps({
+                show: true,
+                message: "Enter a valid name."
+            })
             return false
         }
         if(!order.holder_name || !order.card_number || !order.cvv || !order.expiration_date){
-            alert('Verifique se os dados do cartão foram preenchidos corretamente!');
+            setAlertProps({
+                show: true,
+                message: "Check that the card details have been filled in correctly!"
+            })
             return false
         }
         if(order.food.length === 0 && order.drink.length === 0){
-            alert('Selecione um item para realizar o pedido!');
+            setAlertProps({
+                show: true,
+                message: "Select an item to place the order!"
+            })
             return false
         }
         if(!ccValidator(order.card_number.replace(/\s/g, ''))){
-            alert('Insira um cartão de crédito válido!');
+            setAlertProps({
+                show: true,
+                message: "Insert a valid credit card!"
+            })
             return false
         }
 
@@ -174,7 +194,10 @@ export const Orders = () => {
             })
             setOpenModal(false);
         }catch(e: unknown){
-            alert('Erro ao adicionar pedido.');
+            setAlertProps({
+                show: true,
+                message: "Error placing order, please try again later."
+            })
         }
     }
 
@@ -297,6 +320,7 @@ export const Orders = () => {
                     <button onClick={() => generateOrder()} className="modal__content__button pointer">Finish  <ArrowRight fill="#FFF" /></button>
                 </div>
             </Modal>
+            <Alert {...alertProps}/>
         </>
     ))
 }
