@@ -320,7 +320,7 @@ export const Orders = () => {
                     <button onClick={() => generateOrder()} className="modal__content__button pointer">Finish  <ArrowRight fill="#FFF" /></button>
                 </div>
             </Modal>
-            <Alert {...alertProps}/>
+            <Alert {...alertProps} callbackAlert={setAlertProps}/>
         </>
     ))
 }

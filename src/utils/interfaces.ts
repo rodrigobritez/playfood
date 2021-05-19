@@ -31,5 +31,6 @@ export interface IOrderStore{
 
 export interface IAlert{
     show: boolean,
-    message: string
+    message: string,
+    callbackAlert: Function
 }

@@ -2,15 +2,19 @@ import React, { useEffect, useState } from 'react';
 import './alert.scss';
 import { IAlert } from '../../utils/interfaces'
 
-export const Alert: React.FC<IAlert> = ({ show, message }) => {
+export const Alert: React.FC<IAlert> = ({ show, message, callbackAlert }) => {
     const [display, setDisplay] = useState(show)
+
     useEffect(() => {
-        if (show) {
+        if(show){
+            setDisplay(true);
             setTimeout(() => {
+                callbackAlert({message: "", show: false})
                 setDisplay(false)
-            }, 2000)
+            }, 5000)
         }
-    }, [show])
+    }, [show, callbackAlert])
+    
     return (
         <>
         { display && <div className="alert">
