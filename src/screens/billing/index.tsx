@@ -5,6 +5,7 @@ import { Header } from '../../components/header';
 import { useOrdersStore } from '../../contexts/ordersContext';
 import { useMoney } from '../../services/customHooks';
 import { IOrder, IProduct } from '../../utils/interfaces'
+import { ReactComponent as ArrowLeft } from '../../assets/icons/arrow-left.svg';
 import "./billing.scss"
 
 
@@ -54,13 +55,16 @@ export const Billing: React.FC = () => {
         <>
             <Header />
             <section className="container mt-2">
-                <div>
+                <div className="d-flex align-center">
+                    <ArrowLeft onClick={() => history.goBack()} className="mr-3 pointer"/>
+                    <div>
                     <h2 className="title">Billing</h2>
-                    <span className="subtitle">Pull down to see all billing.</span>
+                    <span className="subtitle">You can view two lists of your main products sold and your earnings.</span>
+                    </div>
                 </div>
                 <div className="d-flex row justify-between align-center mt-1 lists">
                     <div className="w-full mt-1">
-                        <div className="title">Food list </div>
+                        <div className="title">List of best selling <b>foods</b>.</div>
                         <div className="box list">
                             {food.map((product: IProduct) => (
                                 <Card key={product.id} title={`${product.amount}x ${product.name}`} subtitle={`${product.description.slice(0, 40)}...`} value={product.price} showDescription={false} status={1} />
@@ -68,7 +72,7 @@ export const Billing: React.FC = () => {
                         </div>
                     </div>
                     <div className="w-full mt-1">
-                        <div className="title">Drink list </div>
+                    <div className="title">List of best selling <b>drinks</b>.</div>
                         <div className="box list">
                             {drink.map((product: IProduct) => (
                                 <Card key={product.id} title={`${product.amount}x ${product.name}`} subtitle={product.description && `${product.description.slice(0, 40)}...`} value={product.price} showDescription={false} status={1} />
