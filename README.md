@@ -44,7 +44,7 @@ npm start
 
 ![begin](https://raw.githubusercontent.com/devneto/playfood/develop/readme-docs/images/begin.png?token=AKSS4RHNZ7VWPP7LOUEKINTAVXGNI)
 
-![project](https://raw.githubusercontent.com/devneto/playfood/develop/readme-docs/images/project.png?token=AKSS4RHNZ7VWPP7LOUEKINTAVXGNI)
+![project](https://raw.githubusercontent.com/devneto/playfood/develop/readme-docs/images/project.png?token=AKSS4RGLXYF7BC5BSYZPAJDAVXGW2)
 
 
 </center>
